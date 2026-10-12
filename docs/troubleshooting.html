@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Troubleshooting · subject-nsd-plot</title>
+  <link rel="stylesheet" href="assets/style.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="bar">
+      <a class="brand" href="index.html">subject-nsd-plot</a>
+      <nav>
+        <a href="index.html">Overview</a>
+        <a href="user-guide.html">User Guide</a>
+        <a href="technical-guide.html">Technical Guide</a>
+        <a href="troubleshooting.html" class="active">Troubleshooting</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <h1>Troubleshooting</h1>
+    <p class="lede">Common issues while configuring, running or changing subject-nsd-plot, and how to resolve them.</p>
+
+    <h2>Configuration &amp; connections</h2>
+
+    <div class="error-block">
+      <p class="symptom">A data source connection fails or times out</p>
+      <p>Check the server URL and credentials in the connection, and that you can sign in to the same server in a browser with them. The account needs API access to the data the workflow asks for.</p>
+    </div>
+
+    <div class="error-block">
+      <p class="symptom">The run returns no data</p>
+      <p>Names typed into the settings (a subject group, an event type) must match the data source exactly, including capitals. Widen the time range if it's short.</p>
+    </div>
+
+    <h2>Developing</h2>
+
+    <div class="error-block">
+      <p class="symptom">CI says the generated files differ from the committed ones</p>
+      <p>Recompile with <code>./dev/recompile.sh --update</code> and commit the changes in <code>ecoscope-workflows-subject-nsd-plot-workflow/</code>.</p>
+    </div>
+
+    <div class="error-block">
+      <p class="symptom">CI says VERSION.yaml must be greater than main's</p>
+      <p>Every change needs a new version. <code>--update</code> bumps it: the minor number when the run form is unchanged, the major number when it changed.</p>
+    </div>
+
+    <div class="error-block">
+      <p class="symptom">A test case fails in CI but works locally</p>
+      <p>The CI reads each data source's credentials from the repository's GitHub secrets, named in <code>.github/workflows/test.yml</code>. Add the missing ones under Settings → Secrets and variables → Actions.</p>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <p>subject-nsd-plot &middot; Wildlife Dynamics</p>
+  </footer>
+</body>
+</html>

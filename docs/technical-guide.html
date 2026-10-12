@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Technical Guide · subject-nsd-plot</title>
+  <link rel="stylesheet" href="assets/style.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="bar">
+      <a class="brand" href="index.html">subject-nsd-plot</a>
+      <nav>
+        <a href="index.html">Overview</a>
+        <a href="user-guide.html">User Guide</a>
+        <a href="technical-guide.html" class="active">Technical Guide</a>
+        <a href="troubleshooting.html">Troubleshooting</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <h1>Technical Guide</h1>
+    <p class="lede">The steps subject-nsd-plot runs, the packages they come from, and how to recompile and test it.</p>
+
+    <h2>Steps</h2>
+    <p>In the order they run. Each step is a task from one of the packages below.</p>
+    <table>
+      <thead><tr><th>#</th><th>Step</th><th>Task</th><th>Group</th><th>What it does</th></tr></thead>
+      <tbody><tr><td>1</td><td><strong>Set Workflow Details</strong></td><td><code>set_workflow_details</code></td><td></td><td>Add information that will help to differentiate this workflow from another.</td></tr><tr><td>2</td><td><strong>Set Time Range</strong></td><td><code>set_time_range</code></td><td></td><td>Choose the period of time to analyze.</td></tr><tr><td>3</td><td><strong>Connect to EarthRanger</strong></td><td><code>set_er_connection</code></td><td></td><td></td></tr><tr><td>4</td><td><strong>Set Groupers</strong></td><td><code>set_groupers</code></td><td></td><td></td></tr><tr><td>5</td><td><strong>Subject Group</strong></td><td><code>get_subjectgroup_observations</code></td><td></td><td>Get observations for a subject group from EarthRanger.</td></tr><tr><td>6</td><td><strong>Process Relocations</strong></td><td><code>process_relocations</code></td><td></td><td></td></tr><tr><td>7</td><td><strong>Relocations To Trajectory</strong></td><td><code>relocations_to_trajectory</code></td><td></td><td></td></tr><tr><td>8</td><td><strong>Map Columns</strong></td><td><code>map_columns</code></td><td></td><td>Maps and transforms the columns of a DataFrame based on the provided parameters. The order of the operations is as follows: drop columns, retain/reorder columns, and rename columns.</td></tr><tr><td>9</td><td><strong>Persist Trajectories</strong></td><td><code>ecoscope.platform.tasks.io.persist_df_wrapper</code></td><td></td><td>Save a DataFrame to disk with optional sanitization for Arrow compatibility.</td></tr><tr><td>10</td><td><strong>Persist Relocations</strong></td><td><code>ecoscope.platform.tasks.io.persist_df_wrapper</code></td><td></td><td>Save a DataFrame to disk with optional sanitization for Arrow compatibility.</td></tr><tr><td>11</td><td><strong>Split Groups</strong></td><td><code>split_groups</code></td><td></td><td></td></tr><tr><td>12</td><td><strong>Draw Ecoplot</strong></td><td><code>draw_ecoplot</code></td><td></td><td>Generates an EcoPlot from the provided params</td></tr><tr><td>13</td><td><strong>Persist Text</strong></td><td><code>persist_text</code></td><td></td><td>Persist text to a file or cloud storage object.</td></tr><tr><td>14</td><td><strong>nsd_plot_widget</strong></td><td><code>create_plot_widget_single_view</code></td><td></td><td>Create a plot widget with a single view.</td></tr><tr><td>15</td><td><strong>Merge Widget Views</strong></td><td><code>merge_widget_views</code></td><td></td><td>Merge widgets with the same `title` and `widget_type`.</td></tr><tr><td>16</td><td><strong>Gather Dashboard</strong></td><td><code>gather_dashboard</code></td><td></td><td></td></tr></tbody>
+    </table>
+
+    <h2>Task packages</h2>
+    <table>
+      <thead><tr><th>Package</th><th>Version</th><th>Channel</th></tr></thead>
+      <tbody><tr><td><code>ecoscope-platform</code></td><td>==2.25.3</td><td>https://repo.prefix.dev/ecoscope-workflows/</td></tr><tr><td><code>ecoscope-workflows-ext-mep</code></td><td>==1.0.8</td><td>https://repo.prefix.dev/ecoscope-workflows-custom/</td></tr><tr><td><code>ecoscope-workflows-ext-ste</code></td><td>==0.0.0rc1</td><td>https://repo.prefix.dev/ecoscope-workflows-custom/</td></tr><tr><td><code>ecoscope-workflows-ext-custom</code></td><td>==0.1.0rc14</td><td>https://repo.prefix.dev/ecoscope-workflows-custom/</td></tr></tbody>
+    </table>
+
+    <h2>Recompiling</h2>
+    <p><code>spec.yaml</code> is the source; <code>ecoscope-workflows-subject-nsd-plot-workflow/</code> is generated from it by wt-compiler.</p>
+    <pre><code>./dev/recompile.sh --update   # keeps the lock file and bumps VERSION.yaml
+./dev/recompile.sh --install  # a new lock file, and the packages installed</code></pre>
+
+    <h2>Testing</h2>
+    <p>Each case in <code>test-cases.yaml</code> runs the workflow with its settings:</p>
+    <pre><code>pixi run --manifest-path pixi.toml -e default bash dev/pytest-cli.sh subject_nsd_plot --all</code></pre>
+  </main>
+
+  <footer class="site-footer">
+    <p>subject-nsd-plot &middot; Wildlife Dynamics</p>
+  </footer>
+</body>
+</html>
