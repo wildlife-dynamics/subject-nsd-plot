@@ -3,5 +3,7 @@ author:
 - name: Tevin Temu
   organization: Wildlife Dynamics
   email: tevin@wildlifedynamics.com
-description: ''
+description: >-
+  Plots Net Squared Displacement (NSD) over time for each subject in an EarthRanger
+  subject group, chosen from a drop-down of the connected site's subject groups.
 citation: []

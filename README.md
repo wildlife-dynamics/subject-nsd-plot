@@ -1,6 +1,7 @@
 # subject-nsd-plot
 
-subject-nsd-plot
+Plots Net Squared Displacement (NSD) over time for each subject in an EarthRanger subject group,
+chosen from a drop-down of the connected site's subject groups.
 
 ## What it does
 
@@ -65,11 +66,19 @@ You'll be prompted to fill in the following parameters before running.
 
 | Field | Description | Default |
 |---|---|---|
-| Subject Group Name *(required)* | ⚠️ The use of a group with mixed subtypes could lead to unexpected results | — |
+| Subject Group Name *(required)* | A drop-down of the subject groups on the data source chosen above. Pick the data source first; the list loads from it. ⚠️ The use of a group with mixed subtypes could lead to unexpected results | — |
 
 ---
 
 ## Developing
+
+`spec.yaml` is maintained by hand, not by Ecoscope Studio's designer, because it carries an
+`rjsf-overrides` block that Studio doesn't write: it turns **Subject Group Name** into a drop-down
+filled by `EarthRangerEnumResolver` from the selected EarthRanger connection. Saving the design
+from Studio again would replace the spec and drop that block.
+
+The `studio-run` case in `test-cases.yaml` runs the `elephants` subject group on the `MEP-DEV`
+data source.
 
 ```bash
 # recompile spec.yaml (first time: --install; after that: --update, which bumps VERSION.yaml)

@@ -31,11 +31,21 @@
     </div>
 
     <div class="error-block">
+      <p class="symptom">The Subject Group Name drop-down is empty</p>
+      <p>The list loads from the data source chosen under <strong>Connect to EarthRanger</strong>, so pick that first. If it stays empty, the connection failed or the account can't see any subject groups on that site; check its access in EarthRanger.</p>
+    </div>
+
+    <div class="error-block">
       <p class="symptom">The run returns no data</p>
-      <p>Names typed into the settings (a subject group, an event type) must match the data source exactly, including capitals. Widen the time range if it's short.</p>
+      <p>The subject group may have no observations in the chosen time range; widen it, or check in EarthRanger that the group's subjects reported during that period.</p>
     </div>
 
     <h2>Developing</h2>
+
+    <div class="error-block">
+      <p class="symptom">The Subject Group Name field went back to free text</p>
+      <p>The design was saved from Ecoscope Studio, which rewrote <code>spec.yaml</code> without its <code>rjsf-overrides</code> block. Restore the block (see the <a href="technical-guide.html">Technical Guide</a>) and recompile.</p>
+    </div>
 
     <div class="error-block">
       <p class="symptom">CI says the generated files differ from the committed ones</p>

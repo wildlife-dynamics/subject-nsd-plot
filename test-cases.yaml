@@ -1,6 +1,6 @@
 studio-run:
-  name: subject-nsd-plot (from Studio)
-  description: The values used with ▶ Run in Ecoscope Studio's designer.
+  name: subject-nsd-plot
+  description: NSD plot of a subject group
   params:
     workflow_details:
       name: sample
@@ -9,6 +9,6 @@ studio-run:
       until: '2026-10-13T15:29:48'
     er_connection:
       data_source:
-        name: Save the Elephants
+        name: MEP-DEV
     subjectgroup_observations:
-      subject_group_name: ecoscope
+      subject_group_name: elephants
