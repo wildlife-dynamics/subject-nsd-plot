@@ -68,6 +68,52 @@
       "type": "object",
       "title": "Connect to EarthRanger"
     },
+    "groupers": {
+      "additionalProperties": false,
+      "properties": {
+        "groupers": {
+          "default": [
+            {
+              "index_name": "extra__name"
+            }
+          ],
+          "items": {
+            "anyOf": [
+              {
+                "type": "object",
+                "title": "Category",
+                "properties": {
+                  "index_name": {
+                    "title": "Category",
+                    "type": "string",
+                    "oneOf": [
+                      {
+                        "const": "extra__name",
+                        "title": "Subject Name"
+                      }
+                    ],
+                    "default": "extra__name"
+                  }
+                },
+                "required": [
+                  "index_name"
+                ]
+              },
+              {
+                "$ref": "#/$defs/TemporalGrouper"
+              }
+            ],
+            "title": "Group by"
+          },
+          "title": "Group by",
+          "type": "array",
+          "description": "Split the dashboard into one view per subject and/or per time period (e.g. month or year). Remove every entry to show all the data in a single view."
+        }
+      },
+      "type": "object",
+      "required": [],
+      "title": "Group Data"
+    },
     "subjectgroup_observations": {
       "additionalProperties": false,
       "properties": {
@@ -134,6 +180,79 @@
       ],
       "title": "EarthRangerConnection",
       "type": "object"
+    },
+    "SpatialGrouper": {
+      "properties": {
+        "spatial_index_name": {
+          "title": "Spatial Regions",
+          "type": "string"
+        }
+      },
+      "required": [
+        "spatial_index_name"
+      ],
+      "title": "Spatial",
+      "type": "object"
+    },
+    "TemporalGrouper": {
+      "properties": {
+        "temporal_index": {
+          "oneOf": [
+            {
+              "const": "%Y",
+              "title": "Year (example: 2024)"
+            },
+            {
+              "const": "%B",
+              "title": "Month (example: September)"
+            },
+            {
+              "const": "%Y-%m",
+              "title": "Year and Month (example: 2023-01)"
+            },
+            {
+              "const": "%j",
+              "title": "Day of the year as a number (example: 365)"
+            },
+            {
+              "const": "%d",
+              "title": "Day of the month as a number (example: 31)"
+            },
+            {
+              "const": "%A",
+              "title": "Day of the week (example: Sunday)"
+            },
+            {
+              "const": "%H",
+              "title": "Hour (24-hour clock) as number (example: 22)"
+            },
+            {
+              "const": "%Y-%m-%d",
+              "title": "Date (example: 2025-01-31)"
+            }
+          ],
+          "title": "Time",
+          "type": "string"
+        }
+      },
+      "required": [
+        "temporal_index"
+      ],
+      "title": "Time",
+      "type": "object"
+    },
+    "ValueGrouper": {
+      "properties": {
+        "index_name": {
+          "title": "Category",
+          "type": "string"
+        }
+      },
+      "required": [
+        "index_name"
+      ],
+      "title": "Category",
+      "type": "object"
     }
   },
   "uiSchema": {
@@ -154,6 +273,7 @@
       "workflow_details",
       "time_range",
       "er_connection",
+      "groupers",
       "subjectgroup_observations"
     ]
   },

@@ -25,6 +25,9 @@ from ecoscope.platform.tasks.results import draw_ecoplot as draw_ecoplot
 from ecoscope.platform.tasks.results import gather_dashboard as gather_dashboard
 from ecoscope.platform.tasks.results import merge_widget_views as merge_widget_views
 from ecoscope.platform.tasks.skip import never as never
+from ecoscope.platform.tasks.transformation import (
+    add_temporal_index as add_temporal_index,
+)
 from ecoscope.platform.tasks.transformation import map_columns as map_columns
 from wt_contracts import validate as _validate
 from wt_task import task
@@ -96,9 +99,7 @@ def main(params: dict[str, Any], validate_params_schema: bool = True):
             ],
             unpack_depth=1,
         )
-        .partial(
-            groupers=[{"index_name": "extra__name"}], **(params.get("groupers") or {})
-        )
+        .partial(**(params.get("groupers") or {}))
         .call()
     )
 
@@ -196,6 +197,29 @@ def main(params: dict[str, Any], validate_params_schema: bool = True):
         .call()
     )
 
+    traj_temporal_index = (
+        task(add_temporal_index)
+        .validate()
+        .set_task_instance_id("traj_temporal_index")
+        .handle_errors()
+        .with_tracing()
+        .skipif(
+            conditions=[
+                never,
+            ],
+            unpack_depth=1,
+        )
+        .partial(
+            df=to_trajectory,
+            time_col="segment_start",
+            groupers=groupers,
+            cast_to_datetime=True,
+            format="mixed",
+            **(params.get("traj_temporal_index") or {}),
+        )
+        .call()
+    )
+
     columns = (
         task(map_columns)
         .validate()
@@ -209,7 +233,7 @@ def main(params: dict[str, Any], validate_params_schema: bool = True):
             unpack_depth=1,
         )
         .partial(
-            df=to_trajectory,
+            df=traj_temporal_index,
             rename_columns={"nsd": "NSD (km²)", "segment_start": "Time"},
             drop_columns=[],
             retain_columns=[],
