@@ -46,14 +46,27 @@
       <thead><tr><th>Field</th><th>Description</th><th>Default</th></tr></thead>
       <tbody><tr><td>Data source <em>(required)</em></td><td>Select one of your configured data sources.</td><td>—</td></tr></tbody>
     </table>
+    <h3>Group Data</h3>
+    <p>Split the dashboard into one view per subject and/or per time period. Add entries to the <strong>Group by</strong> list; the dashboard filter then switches between the views. Remove every entry to show all the data in a single view.</p>
+    <table>
+      <thead><tr><th>Group by entry</th><th>What it does</th><th>Default</th></tr></thead>
+      <tbody><tr><td>Category</td><td>Group by subject. <strong>Subject Name</strong> is the only category.</td><td>One <strong>Subject Name</strong> entry</td></tr><tr><td>Time</td><td>Group by a time period: year, month, year and month, day of the year, day of the month, day of the week, hour or date.</td><td>—</td></tr></tbody>
+    </table>
+    <p>With the default, each subject gets its own NSD plot. Combine Subject Name with a Time entry (e.g. <em>Year and Month</em>) for one plot per subject per period.</p>
     <h3>Subject Group</h3>
     <table>
       <thead><tr><th>Field</th><th>Description</th><th>Default</th></tr></thead>
       <tbody><tr><td>Subject Group Name <em>(required)</em></td><td>A drop-down of the subject groups on the data source chosen under <strong>Connect to EarthRanger</strong>. Pick the data source first; the list loads from it. ⚠️ The use of a group with mixed subtypes could lead to unexpected results</td><td>—</td></tr></tbody>
     </table>
+    <h3>Relocations To Trajectory</h3>
+    <p>Advanced. Segments outside these limits are removed before NSD is calculated. The defaults (up to 100 km, 48 hours and 500 km/h per segment) keep almost every segment; tighter limits drop more and can change the NSD curve.</p>
+    <table>
+      <thead><tr><th>Field</th><th>Default</th></tr></thead>
+      <tbody><tr><td>Minimum Segment Length (Meters)</td><td><code>0.001</code></td></tr><tr><td>Maximum Segment Length (Meters)</td><td><code>100000</code></td></tr><tr><td>Minimum Segment Duration (Seconds)</td><td><code>1</code></td></tr><tr><td>Maximum Segment Duration (Seconds)</td><td><code>172800</code></td></tr><tr><td>Minimum Segment Speed (Kilometers per Hour)</td><td><code>0.01</code></td></tr><tr><td>Maximum Segment Speed (Kilometers per Hour)</td><td><code>500</code></td></tr></tbody>
+    </table>
 
     <h2>4. Run it and find the results</h2>
-    <p>The workflow writes its files to the results folder the runner gives it (<code>ECOSCOPE_WORKFLOWS_RESULTS</code>), and shows its dashboard when it finishes.</p>
+    <p>The workflow writes its files to the results folder the runner gives it (<code>ECOSCOPE_WORKFLOWS_RESULTS</code>), and shows its dashboard when it finishes. The dashboard has an NSD plot for each subject: net squared displacement (km²) from its first fix, over time.</p>
   </main>
 
   <footer class="site-footer">

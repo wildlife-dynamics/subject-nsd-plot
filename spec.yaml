@@ -4,16 +4,8 @@ requirements:
   version: ==2.25.3
   channel: https://repo.prefix.dev/ecoscope-workflows/
 
-- name: ecoscope-workflows-ext-mep
-  version: ==1.0.8
-  channel: https://repo.prefix.dev/ecoscope-workflows-custom/
-
-- name: ecoscope-workflows-ext-ste
-  version: ==0.0.0rc1
-  channel: https://repo.prefix.dev/ecoscope-workflows-custom/
-
 - name: ecoscope-workflows-ext-custom
-  version: ==0.1.0rc14
+  version: ==0.1.4
   channel: https://repo.prefix.dev/ecoscope-workflows-custom/
 
 - name: pydeck
@@ -129,13 +121,6 @@ workflow:
   task: relocations_to_trajectory
   partial:
     relocations: ${{ workflow.relocations.return }}
-    trajectory_segment_filter:
-      min_length_meters: 0.001
-      max_length_meters: 100000
-      min_time_secs: 1
-      max_time_secs: 172800
-      min_speed_kmhr: 0.01
-      max_speed_kmhr: 500
 
 # Index by any chosen time grouper before segment_start is renamed.
 - name: Add Temporal Index
@@ -202,7 +187,7 @@ workflow:
         mode: lines
         line:
           color: '#2E6F95'
-          width: 1.5
+          width: 1.25
         name: null
         xperiodalignment: null
         marker_colors: null
