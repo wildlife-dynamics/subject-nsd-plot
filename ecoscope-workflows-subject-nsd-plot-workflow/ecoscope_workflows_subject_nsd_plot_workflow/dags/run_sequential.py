@@ -182,18 +182,7 @@ def main(params: dict[str, Any], validate_params_schema: bool = True):
             ],
             unpack_depth=1,
         )
-        .partial(
-            relocations=relocations,
-            trajectory_segment_filter={
-                "min_length_meters": 0.001,
-                "max_length_meters": 100000,
-                "min_time_secs": 1,
-                "max_time_secs": 172800,
-                "min_speed_kmhr": 0.01,
-                "max_speed_kmhr": 500,
-            },
-            **(params.get("to_trajectory") or {}),
-        )
+        .partial(relocations=relocations, **(params.get("to_trajectory") or {}))
         .call()
     )
 
@@ -326,7 +315,7 @@ def main(params: dict[str, Any], validate_params_schema: bool = True):
                     "color_col": None,
                     "plot_style": {
                         "mode": "lines",
-                        "line": {"color": "#2E6F95", "width": 1.5},
+                        "line": {"color": "#2E6F95", "width": 1.25},
                         "name": None,
                         "xperiodalignment": None,
                         "marker_colors": None,

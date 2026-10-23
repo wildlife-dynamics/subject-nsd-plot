@@ -40,6 +40,16 @@
       <p>The subject group may have no observations in the chosen time range; widen it, or check in EarthRanger that the group's subjects reported during that period.</p>
     </div>
 
+    <div class="error-block">
+      <p class="symptom">The NSD curve has gaps, or jumps where segments are missing</p>
+      <p>The <strong>Relocations To Trajectory</strong> segment limits drop segments outside them before NSD is calculated. The defaults keep almost everything; if you tightened them, widen them again, especially the maximum duration for subjects with long gaps between fixes.</p>
+    </div>
+
+    <div class="error-block">
+      <p class="symptom">The dashboard shows one plot for everything, or too many plots</p>
+      <p>Check the <strong>Group by</strong> list under <strong>Group Data</strong>. An empty list gives a single view of all the data; each entry splits it further, so Subject Name plus a Time entry gives one plot per subject per period.</p>
+    </div>
+
     <h2>Developing</h2>
 
     <div class="error-block">
