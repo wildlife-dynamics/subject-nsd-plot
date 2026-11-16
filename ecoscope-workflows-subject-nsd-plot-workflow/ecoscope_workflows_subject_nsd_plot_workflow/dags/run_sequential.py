@@ -315,7 +315,7 @@ def main(params: dict[str, Any], validate_params_schema: bool = True):
                     "color_col": None,
                     "plot_style": {
                         "mode": "lines",
-                        "line": {"color": "#2E6F95", "width": 1.25},
+                        "line": {"color": None, "width": 1.15},
                         "name": None,
                         "xperiodalignment": None,
                         "marker_colors": None,
@@ -326,7 +326,7 @@ def main(params: dict[str, Any], validate_params_schema: bool = True):
                         "width": None,
                         "xperiod": None,
                     },
-                    "color_column": None,
+                    "color_column": "extra__subject__hex",
                 }
             ],
             group_by="extra__name",

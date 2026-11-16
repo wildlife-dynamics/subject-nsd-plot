@@ -28,13 +28,14 @@ rjsf-overrides:
           type: subject_group_name
           depends_on: properties.er_connection.properties.data_source.properties.name
 
-    # Group by subject name and/or a time period; leave the list empty for a single "All" view.
+    # Group by subject name only (no time or spatial groupers); leave the list empty for a
+    # single "All" view.
     groupers.properties.groupers.title: Group by
     groupers.properties.groupers.description: >-
-      Split the dashboard into one view per subject and/or per time period (e.g. month or year).
-      Remove every entry to show all the data in a single view.
-    groupers.properties.groupers.default:
-    - index_name: extra__name
+      Add a Subject Name entry to split the dashboard into one view per subject.
+      Leave it empty to show all subjects in a single view.
+    # groupers.properties.groupers.default:
+    # - index_name: extra__name
     groupers.properties.groupers.items.anyOf:
     - type: object
       title: Category
@@ -48,7 +49,6 @@ rjsf-overrides:
           default: extra__name
       required:
       - index_name
-    - $ref: '#/$defs/TemporalGrouper'
 
 task-instance-defaults:
   skipif:
@@ -186,8 +186,8 @@ workflow:
       plot_style:
         mode: lines
         line:
-          color: '#2E6F95'
-          width: 1.25
+          color: null #'#2E6F95'
+          width: 1.15
         name: null
         xperiodalignment: null
         marker_colors: null
@@ -197,7 +197,7 @@ workflow:
         fillcolor: null
         width: null
         xperiod: null
-      color_column: null
+      color_column: extra__subject__hex
     group_by: extra__name
     tickformat: '%b-%Y'
   mapvalues:
