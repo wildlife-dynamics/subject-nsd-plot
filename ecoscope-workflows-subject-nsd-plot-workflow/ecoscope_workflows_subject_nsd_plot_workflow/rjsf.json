@@ -72,11 +72,7 @@
       "additionalProperties": false,
       "properties": {
         "groupers": {
-          "default": [
-            {
-              "index_name": "extra__name"
-            }
-          ],
+          "default": null,
           "items": {
             "anyOf": [
               {
@@ -98,16 +94,13 @@
                 "required": [
                   "index_name"
                 ]
-              },
-              {
-                "$ref": "#/$defs/TemporalGrouper"
               }
             ],
             "title": "Group by"
           },
           "title": "Group by",
           "type": "array",
-          "description": "Split the dashboard into one view per subject and/or per time period (e.g. month or year). Remove every entry to show all the data in a single view."
+          "description": "Add a Subject Name entry to split the dashboard into one view per subject. Leave it empty to show all subjects in a single view."
         }
       },
       "type": "object",

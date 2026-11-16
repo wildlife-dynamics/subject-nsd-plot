@@ -44,6 +44,9 @@ from ecoscope.platform.tasks.transformation import (
     add_temporal_index as add_temporal_index,
 )
 from ecoscope.platform.tasks.transformation import map_columns as map_columns
+from ecoscope_workflows_ext_ste.tasks.transformation import (
+    add_rgba_from_hex as add_rgba_from_hex,
+)
 
 
 def main(params: dict[str, Any], validate_params_schema: bool = True):
@@ -308,6 +311,26 @@ def main(params: dict[str, Any], validate_params_schema: bool = True):
         .call()
     )
 
+    hex_to_rgba = (
+        task(add_rgba_from_hex)
+        .validate()
+        .set_task_instance_id("hex_to_rgba")
+        .handle_errors()
+        .with_tracing()
+        .skipif(
+            conditions=[
+                never,
+            ],
+            unpack_depth=1,
+        )
+        .partial(
+            column="extra__hex",
+            new_column="rgba_colors",
+            **(params.get("hex_to_rgba") or {}),
+        )
+        .mapvalues(argnames=["df"], argvalues=groups)
+    )
+
     ecoplot = (
         task(draw_ecoplot)
         .validate()
@@ -325,10 +348,9 @@ def main(params: dict[str, Any], validate_params_schema: bool = True):
                 {
                     "x_col": "Time",
                     "y_col": "NSD (km²)",
-                    "color_col": None,
                     "plot_style": {
                         "mode": "lines",
-                        "line": {"color": "#2E6F95", "width": 1.25},
+                        "line": {"color": None, "width": 1.15},
                         "name": None,
                         "xperiodalignment": None,
                         "marker_colors": None,
@@ -339,14 +361,14 @@ def main(params: dict[str, Any], validate_params_schema: bool = True):
                         "width": None,
                         "xperiod": None,
                     },
-                    "color_column": None,
+                    "color_col": "rgba_colors",
                 }
             ],
             group_by="extra__name",
             tickformat="%b-%Y",
             **(params.get("ecoplot") or {}),
         )
-        .mapvalues(argnames=["dataframe"], argvalues=groups)
+        .mapvalues(argnames=["dataframe"], argvalues=hex_to_rgba)
     )
 
     text = (
