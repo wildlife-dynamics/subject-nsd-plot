@@ -1,4 +1,44 @@
 id: subject_nsd_plot
+
+metadata:
+  name: Subject NSD Plot
+  description: >-
+    Plots Net Squared Displacement (NSD) over time for each subject in an EarthRanger
+    subject group, chosen from a drop-down of the connected site's subject groups, with
+    one line per subject in its EarthRanger colour, on an interactive dashboard with one
+    view per subject or one for the whole group.
+  maintainers:
+    - name: Tevin Temu
+      email: tevin@wildlifedynamics.com
+      role: owner
+  outputs:
+    - name: NSD Dashboard
+      type: dashboard
+      description: >-
+        An interactive NSD-over-time plot, one view per subject or one for the whole
+        subject group.
+      indicators:
+        - name: Net squared displacement
+    - name: NSD Plot
+      type: plot
+      description: >-
+        Each subject's NSD (km²) over time as a line in the subject's EarthRanger colour,
+        with monthly ticks.
+      indicators:
+        - name: Net squared displacement
+    - name: Movement Data
+      type: file
+      description: >-
+        The subject group's trajectory segments with NSD per segment (GeoParquet).
+      indicators:
+        - name: Net squared displacement
+  license: BSD-3-Clause
+  repository: https://github.com/wildlife-dynamics/subject-nsd-plot
+  documentation: https://github.com/wildlife-dynamics/subject-nsd-plot#readme
+  readme: README.md
+  keywords: [movement, nsd, net-squared-displacement, displacement, trajectories, earthranger]
+  thumbnail: resources/nsd-plot-synthetic.png
+
 requirements:
 - name: ecoscope-platform
   version: ==2.25.3
